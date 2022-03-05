@@ -1,0 +1,34 @@
+.mysurvey-wrapper{
+  width: 80vw;
+  min-height: 81.8vh;
+  padding: 25px;
+  margin: 20px auto;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .surveylist{
+    display: inline-flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    .survey-card{
+      margin: 16px 16px;
+      img{
+        height: 240px;
+        width: 240px;
+      }
+      .survey-title{
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+    }
+  }
+  .surveylist-footer{
+    .surveylist-paging{
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

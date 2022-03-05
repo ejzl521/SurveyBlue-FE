@@ -1,0 +1,37 @@
+.explain{
+  overflow-x: hidden;
+  background-color: #212429;
+  .explain-wrapper{
+    background-color: #fff;
+    width: 1200px;
+    min-height: 81vh;
+    padding: 50px;
+    margin: 25px auto;
+    border-radius: 10px;
+    .explain-header{
+      .explain-menu{
+      }
+    }
+    .explain-content{
+      margin: 30px 0;
+      .text{
+        margin: 10px 0;
+        .text-title{
+          font-size: 2em;
+          font-weight: 600;
+        }
+      }
+      .text-contents{
+        margin: 10px 0;
+        .text-highlight{
+          color: blueviolet;
+          font-size: 1.1em;
+          font-weight: 600;
+        }
+      }
+      .text-img{
+
+      }
+    }
+  }
+}

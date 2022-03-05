@@ -1,0 +1,31 @@
+.myinfo-wrapper{
+  overflow-y: hidden;
+  .myinfo-content{
+    display: flex;
+    align-items: center;
+    .myinfo-menu{
+      padding: 50px 0;
+      background-color: black;
+      width: 200px;
+      min-height: 86vh;
+    }
+    .change-password{
+      width: 500px;
+      margin: 0 auto;
+      .error-message{
+        font-size: 12px;
+        color: blueviolet;
+      }
+      .change-password-wrapper{
+        overflow-y: hidden;
+        .input-form{
+          width: 400px;
+          .error-message{
+            color: blue;
+          }
+        }
+      }
+    }
+  }
+
+}
