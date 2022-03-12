@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Formik, ErrorMessage} from "formik";
-import {Input, Form, Button, Select, Menu, Modal} from "antd";
+import {Formik, Form, ErrorMessage} from "formik";
+import {Input, Button, Select, Menu, Modal} from "antd";
 import {
   QuestionCircleTwoTone, CloseOutlined,
   DeleteFilled, PlusOutlined, DiffOutlined, DesktopOutlined, SettingOutlined, BarChartOutlined
@@ -10,9 +10,9 @@ import api from '../../utils/api';
 import * as Yup from "yup";
 import ImageUploader from "../../components/ImageUploader";
 import axios from "axios";
+import _ from "lodash";
 
 const EditSurvey = (props: any) => {
-
   const [survey, setSurvey]: any = useState({
     id: "",
     title: "",
@@ -33,7 +33,8 @@ const EditSurvey = (props: any) => {
       }
     ]
   });
-
+  // 원본을 복사한 내용을 담는 state. 설문조사가 변경되었는지 확인하기 위한 용도
+  const [survey2, setSurvey2] = useState({});
   const validationSchema = Yup.object().shape({
     title: Yup.string()
       .required('설문조사의 제목이 필요합니다!'),
@@ -56,10 +57,9 @@ const EditSurvey = (props: any) => {
       })
     ).min(1, "최소 한 문제는 등록하세요!")
   });
-
   // 이미지 파일의 blob을 가져와서 파일 객체로 변환.
   const getSurvey = async (id: any, source: any) => {
-    try{
+    try {
       const res = await api.get(`/api/survey/${id}`, {cancelToken: source.token});
       const survey_id = res.data.id
       const survey_title = res.data.title
@@ -95,17 +95,15 @@ const EditSurvey = (props: any) => {
         title: survey_title,
         questions: survey_questions,
       });
-    } catch (err) {}
+    } catch (err) {
+    }
   }
-
-  const handleSubmit = async (value: any) => {
-
-    if(JSON.stringify(value) === JSON.stringify(survey)){
-      alert("변경사항이 없습니다!");
+  const handleSubmit = async () => {
+    const questions_for_db: any = _.cloneDeep(result);
+    let img_objective: any = [];
+    if (JSON.stringify(survey2) === JSON.stringify(result)) {
+      alert("변경 내용이 없습니다!");
     } else {
-      const questions_for_db = {...value};
-      let img_objective: any = [];
-
       questions_for_db.questions.forEach((item: any, idx: number) => {
         if (item.type === "objective") {
           const choices_for_db = item.choices.map((choice: any) => choice.text);
@@ -117,7 +115,6 @@ const EditSurvey = (props: any) => {
           questions_for_db.questions[idx] = {type: item.type, title: item.title}
         }
       })
-
       const update_survey = {...questions_for_db}
       await api.put(`/api/survey/${survey.id}`, update_survey);
       for (const item of img_objective) {
@@ -129,19 +126,18 @@ const EditSurvey = (props: any) => {
       props.history.push("/mysurvey");
     }
   }
-
   // 최상단 메뉴 상태 및 survey 가져오기
   useEffect(() => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     props.setMenu("mysurvey");
-    getSurvey(props.match.params.id, source);
+    // survey 데이터를 가져온 후 원본을 복제한 값을 담는 state에 저장하기
+    getSurvey(props.match.params.id, source)
+      .then(data => setSurvey2(_.cloneDeep(survey)));
     return () => {
       source.cancel();
     };
   }, []);
-
-
   // 삭제 확인 모달
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
@@ -156,36 +152,31 @@ const EditSurvey = (props: any) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
   // 수정 확인 모달
   const [isModalVisible2, setIsModalVisible2] = useState(false);
-  const showModal2 = () => {
+  const showModal2 = (value: any) => {
+    setResult(value);
     setIsModalVisible2(true);
   };
   const handleOk2 = () => {
     setIsModalVisible2(false);
-    handleSubmit(result);
+    handleSubmit().then();
   };
   const handleCancel2 = () => {
     setIsModalVisible2(false);
   };
-
-  const [result, setResult]: any = useState();
-
-  const updateResult = (value: any) => {
-    setResult(value);
-    showModal2();
-  }
+  // 설문조사 변경 결과를 저장할 state
+  const [result, setResult]: any = useState({});
   return (
     <div className="survey">
       <Formik
         initialValues={survey} validationSchema={validationSchema}
-        onSubmit={updateResult} enableReinitialize={true}
+        onSubmit={showModal2} enableReinitialize={true}
       >
         {({values, handleSubmit, handleChange, setValues}) => (
           <div className="survey-wrapper">
             <Form
-              onFinish={handleSubmit}
+              onSubmit={handleSubmit}
             >
               <div className="survey-header">
                 <Menu mode="horizontal" className="surveyinfo-menu" selectedKeys={["2"]}>
@@ -280,14 +271,14 @@ const EditSurvey = (props: any) => {
                 }
                 // 객관식(사진)
                 else if (item.type === "img_objective") {
-                  const img_choices = item.images.map((image: any, idx: any) =>
+                  const img_choices: any = item.images.map((image: any, idx: any) =>
                     <div key={idx}>
                       <div className="img-obj-choice">
                         <ImageUploader
                           preview_URL={image.preview_URL}
                           loaded={image.loaded}
                           upload_img={(file: any, preview_URL: any) => {
-                            const upload_img_choice: any = {...values};
+                            const upload_img_choice = {...values};
                             upload_img_choice.questions[index].images[idx] = {
                               file: file,
                               preview_URL: preview_URL,

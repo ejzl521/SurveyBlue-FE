@@ -59,6 +59,7 @@ const AddSurvey = (props: any) => {
     ).min(1, "최소 한 문제는 등록하세요!")
   });
 
+
   const handleSubmit = async (value: any) => {
     const questions_for_db = {...value};
     let img_objective: any = [];
