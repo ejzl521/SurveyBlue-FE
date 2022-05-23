@@ -12,7 +12,7 @@
 - scss
 - axios (Http 요청)
 - react router (라우팅)
-- formik, yup (Form의 Validation 체크 및 상태 관리)
+- formik, yup을 이용해 Dynamic Form 구현 (Form의 Validation 체크 및 상태 관리)
 - react-toastify (토스트 알림)
 - redux, redux-persist(로그인 성공시 생성되는 jwt-token 정보를 session storage에 저장)
 - jwt-decode (jwt-token 파싱)
@@ -39,3 +39,5 @@
 # 아래 링크에 기능 및 설명에 대해 하드코딩 해두었다😎
 - http://surveyblue.site/explain
 
+# BE 소스코드 ↓↓↓'
+- https://github.com/ejzl521/SurveyBlue-BE
