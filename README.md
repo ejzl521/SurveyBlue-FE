@@ -10,12 +10,12 @@
 - react router (라우팅)
 - formik, yup (form 유효성 체크)
 - react-toastify (토스트 알림)
-- redux, redux-persist(로그인 성공시 생성되는 jwt-token 정보를 session storage에 저장: 새로고침해도 로그인 정보를 저장)
+- redux, redux-persist(로그인 성공시 생성되는 jwt-token 정보를 session storage에 저장)
 - jwt-decode (jwt-token 파싱)
 - axios interceptor 구현 (api에 인증 미들웨어를 설정해서 HTTP Header에 jwt-token 정보를 넘기기 위해 구현)
 - Private Route 구현 (로그인에 성공해서 인증된 사용자만 통과시킬 수 있는 컴포넌트 구현, 사용자와 관리자도 )
 - jwt-token 유효성 검증 & 해독 유틸리티 클래스 구현
-- 이미지 업로더
+- 이미지 업로더(설문조사 객관식 문제 등록 가능!)
 
 # 기능
 - 회원가입
