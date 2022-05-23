@@ -8,7 +8,7 @@
 - scss
 - axios (Http 요청)
 - react router (라우팅)
-- formik, yup (form 유효성 체크)
+- formik, yup (Form의 Validation 체크 및 상태 관리)
 - react-toastify (토스트 알림)
 - redux, redux-persist(로그인 성공시 생성되는 jwt-token 정보를 session storage에 저장)
 - jwt-decode (jwt-token 파싱)
