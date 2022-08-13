@@ -1,0 +1,23 @@
+.signup-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 3rem 0;
+  .input-form {
+    width: 25rem;
+
+    .error-message {
+      color: blue;
+    }
+  }
+
+  .ant-form-item-label > label {
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  .ant-checkbox-wrapper {
+    color: #ffffff;
+  }
+}

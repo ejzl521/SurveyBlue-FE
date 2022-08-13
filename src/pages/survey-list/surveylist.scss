@@ -1,0 +1,30 @@
+.surveylist-wrapper{
+  background-color: #fff;
+  width: 80%;
+  padding: 3rem;
+  margin: 1.5rem auto;
+  border-radius: 10px;
+  .surveylist{
+    display: inline-flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    .survey-card{
+      margin: 16px 16px;
+      img{
+        height: 240px;
+        width: 240px;
+      }
+      .survey-title{
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+    }
+  }
+  .surveylist-footer{
+    .surveylist-paging{
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

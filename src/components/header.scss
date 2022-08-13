@@ -1,0 +1,36 @@
+.header-wrapper {
+  padding: 1.2rem 4rem;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: #212429;
+
+  .header-logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover{
+      color: #6f23d3;
+    }
+  }
+
+  .header-menu {
+    font-family: 'Noto Sans KR', sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    .header-menu-item {
+      font-weight: bold;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin: 0 1rem;
+      cursor: pointer;
+      &:hover{
+        color: #6f23d3;
+      }
+    }
+  }
+}

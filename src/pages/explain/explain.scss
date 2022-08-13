@@ -1,0 +1,39 @@
+.explain{
+  background-color: #212429;
+  .explain-wrapper{
+    background-color: #fff;
+    width: 80%;
+    padding: 3rem;
+    margin: 1.5rem auto;
+    border-radius: 10px;
+    .explain-header{
+      .explain-menu{
+      }
+    }
+    .explain-content{
+      margin: 1.75rem 0;
+      .text{
+        margin: 0.75rem 0;
+        .text-title{
+          font-size: 2rem;
+          font-weight: 600;
+        }
+      }
+      .text-contents{
+        margin: 0.75rem 0;
+        font-size: 1rem;
+        .text-highlight{
+          color: blueviolet;
+          font-size: 1.1rem;
+          font-weight: 600;
+        }
+      }
+      .text-img{
+        img{
+          max-width: 80%;
+          object-fit: contain;
+        }
+      }
+    }
+  }
+}
