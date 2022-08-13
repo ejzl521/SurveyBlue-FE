@@ -1,10 +1,12 @@
 .surveyinfo{
   overflow-y: hidden;
-  min-height: 86vh;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .surveyinfo-wrapper{
-    width: 900px;
-    padding: 50px;
-    margin: 20px auto;
+    width: 45rem;
+    padding: 3rem;
     border-radius: 10px;
     background-color: #efecf5;
 
@@ -15,35 +17,30 @@
         justify-content: center;
         background-color: inherit;
         border: 0;
-        margin-bottom: 15px;
+        margin-bottom: 1rem;
         .menu-item{
           border-bottom: 1px solid #fff;
         }
       }
       .surveyinfo-title{
-        font-size: 2em;
+        font-size: 2rem;
         font-weight: bold;
       }
     }
 
     .surveyinfo-contents{
 
-      .error-message{
-        font-size: 12px;
-        color: blueviolet;
-        font-weight: bold;
-      }
       .objective-wrapper{
-        margin: 10px 0;
+        margin: 0.75rem 0;
         .objective-title{
-          font-size: 1.2em;
+          font-size: 1.2rem;
           font-weight: bold;
         }
       }
       .subjective-wrapper{
-        margin: 10px 0;
+        margin: 0.75rem 0;
         .subjective-title{
-          font-size: 1.2em;
+          font-size: 1.2rem;
           font-weight: bold;
         }
         .subjective-input{
@@ -55,9 +52,9 @@
       }
 
       .img-objective-wrapper{
-        margin: 10px 0;
+        margin: 0.75rem 0;
         .img-objective-title{
-          font-size: 1.2em;
+          font-size: 1.2rem;
           font-weight: bold;
         }
         .img-objective-radio-group{
@@ -66,16 +63,19 @@
           justify-content: center;
           flex-wrap: wrap;
           .img-objective-radio{
-            margin: 0 20px;
+            margin: 0 1.25rem;
             display: flex;
             align-items: center;
             flex-direction: column;
             .objective-img{
               transition: box-shadow 1s;
               padding: 1px;
+              width: 11rem;
+              height: 11rem;
               img{
-                width:170px;
-                height: 170px;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
               }
             }
             &:hover{

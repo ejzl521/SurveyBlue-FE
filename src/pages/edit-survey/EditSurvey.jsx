@@ -16,12 +16,11 @@ import api from "../../utils/api";
 import * as Yup from "yup";
 import ImageUploader from "../../components/ImageUploader";
 import _ from "lodash";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditSurvey = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get("id");
+  const { id } = useParams();
   const [survey, setSurvey] = useState({
     id: "",
     title: "",
@@ -43,7 +42,6 @@ const EditSurvey = () => {
     ],
   });
   // 원본을 복사한 내용을 담는 state. 설문조사가 변경되었는지 확인하기 위한 용도
-  const [survey2, setSurvey2] = useState({});
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("설문조사의 제목이 필요합니다!"),
     questions: Yup.array()
@@ -72,9 +70,9 @@ const EditSurvey = () => {
       .min(1, "최소 한 문제는 등록하세요!"),
   });
   // 이미지 파일의 blob을 가져와서 파일 객체로 변환.
-  const getSurvey = async (id, source) => {
+  const getSurvey = async () => {
     try {
-      const res = await api.get(`/api/survey/${id}`, { cancelToken: source.token });
+      const res = await api.get(`/api/survey/${id}`);
       const survey_id = res.data.id;
       const survey_title = res.data.title;
       const survey_questions = [];
@@ -85,7 +83,7 @@ const EditSurvey = () => {
         } else if (item.type === "subjective") {
           survey_questions.push({ type: item.type, title: item.title });
         } else if (item.type === "img_objective") {
-          const db_images = await api.get(`/api/image/blob?question_id=${item.id}`, { cancelToken: source.token });
+          const db_images = await api.get(`/api/image/blob?question_id=${item.id}`);
           const images = [];
           for (let i = 0; i < item.img_count; i++) {
             // blob 데이터를 파일로 변환
@@ -117,38 +115,34 @@ const EditSurvey = () => {
   const handleSubmit = async () => {
     const questions_for_db = _.cloneDeep(result);
     const img_objective = [];
-    if (JSON.stringify(survey2) === JSON.stringify(result)) {
-      alert("변경 내용이 없습니다!");
-    } else {
-      questions_for_db.questions.forEach((item, idx) => {
-        if (item.type === "objective") {
-          const choices_for_db = item.choices.map((choice) => choice.text);
-          questions_for_db.questions[idx].choices = choices_for_db;
-        } else if (item.type === "img_objective") {
-          item.images.forEach((image) => {
-            img_objective.push({ file: image.file, question_index: idx });
-          });
-          questions_for_db.questions[idx] = { type: item.type, title: item.title };
-        }
-      });
-      const update_survey = { ...questions_for_db };
-      await api.put(`/api/survey/${survey.id}`, update_survey);
-      for (const item of img_objective) {
-        const formData = new FormData();
-        formData.append("file", item.file);
-        await api.post(
-          `/api/image/upload_img_obj?survey_id=${survey.id}&question_index=${item.question_index}`,
-          formData,
-        );
+    questions_for_db.questions.forEach((item, idx) => {
+      if (item.type === "objective") {
+        const choices_for_db = item.choices.map((choice) => choice.text);
+        questions_for_db.questions[idx].choices = choices_for_db;
+      } else if (item.type === "img_objective") {
+        item.images.forEach((image) => {
+          img_objective.push({ file: image.file, question_index: idx });
+        });
+        questions_for_db.questions[idx] = { type: item.type, title: item.title };
       }
-      alert("설문조사 수정이 완료되었습니다!");
-      navigate("/mysurvey");
+    });
+    const update_survey = { ...questions_for_db };
+    await api.put(`/api/survey/${survey.id}`, update_survey);
+    for (const item of img_objective) {
+      const formData = new FormData();
+      formData.append("file", item.file);
+      await api.post(
+        `/api/image/upload_img_obj?survey_id=${survey.id}&question_index=${item.question_index}`,
+        formData,
+      );
     }
+    alert("설문조사 수정이 완료되었습니다!");
+    navigate(`/mysurvey/${id}`);
   };
   // 최상단 메뉴 상태 및 survey 가져오기
   useEffect(() => {
     // survey 데이터를 가져온 후 원본을 복제한 값을 담는 state에 저장하기
-    getSurvey(id).then((data) => setSurvey2(_.cloneDeep(survey)));
+    getSurvey();
   }, []);
   // 삭제 확인 모달
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -157,9 +151,9 @@ const EditSurvey = () => {
   };
   const handleOk = async () => {
     setIsModalVisible(false);
-    await api.delete(`/api/survey/${survey.id}`);
+    await api.delete(`/api/survey/${id}`);
     alert("삭제가 완료되었습니다!");
-    navigate("/mysurvey");
+    navigate("/mysurvey?page_number=1");
   };
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -179,6 +173,8 @@ const EditSurvey = () => {
   };
   // 설문조사 변경 결과를 저장할 state
   const [result, setResult] = useState({});
+
+  console.log(survey);
   return (
     <div className="survey">
       <Formik
@@ -197,7 +193,7 @@ const EditSurvey = () => {
                     icon={<DesktopOutlined />}
                     className="menu-item"
                     onClick={() => {
-                      navigate(`/mysurvey/${survey.id}`);
+                      navigate(`/mysurvey/${id}`);
                     }}
                   >
                     등록된 화면
@@ -210,7 +206,7 @@ const EditSurvey = () => {
                     icon={<BarChartOutlined />}
                     className="menu-item"
                     onClick={() => {
-                      navigate(`/mysurvey/result/${survey.id}`);
+                      navigate(`/mysurvey/result/${id}`);
                     }}
                   >
                     통계보기
@@ -430,10 +426,9 @@ const EditSurvey = () => {
                     htmlType="submit"
                     size="large"
                     onClick={() => {
-                      validationSchema
-                        .validate(values)
-                        .then((data) => {})
-                        .catch((err) => alert(err));
+                      validationSchema.validate(values).catch(() => {
+                        alert("모든 항목을 올바르게 등록해주세요!");
+                      });
                     }}
                   >
                     수정하기

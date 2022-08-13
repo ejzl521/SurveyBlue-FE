@@ -3,11 +3,11 @@ import { Badge, Card, Input, Radio, Menu } from "antd";
 import api from "../../utils/api";
 import "./surveyinfo.scss";
 import { BarChartOutlined, DesktopOutlined, SettingOutlined } from "@ant-design/icons";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const SurveyInfo = (props) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const id = setSearchParams.get("id");
+const SurveyInfo = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [survey, setSurvey] = useState({
     id: "",
     title: "",
@@ -39,7 +39,7 @@ const SurveyInfo = (props) => {
               icon={<SettingOutlined />}
               className="menu-item"
               onClick={() => {
-                props.history.push(`/mysurvey/edit/${survey.id}`);
+                navigate(`/mysurvey/edit/${id}`);
               }}
             >
               수정하기
@@ -49,7 +49,7 @@ const SurveyInfo = (props) => {
               icon={<BarChartOutlined />}
               className="menu-item"
               onClick={() => {
-                props.history.push(`/mysurvey/result/${survey.id}`);
+                navigate(`/mysurvey/result/${id}`);
               }}
             >
               통계보기

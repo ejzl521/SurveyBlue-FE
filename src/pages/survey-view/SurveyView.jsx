@@ -6,13 +6,12 @@ import * as Yup from "yup";
 import "./surveyview.scss";
 import { jwtUtils } from "../../utils/JwtUtils";
 import { useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SurveyView = () => {
   const token = useSelector((state) => state.Auth.token);
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get("id");
+  const { id } = useParams();
   const [survey, setSurvey] = useState({
     id: "",
     title: "",
@@ -20,10 +19,10 @@ const SurveyView = () => {
   });
 
   useEffect(() => {
-    getSurvey(id);
+    getSurvey();
   }, []);
 
-  const getSurvey = async (id) => {
+  const getSurvey = async () => {
     const res = await api.get(`/api/survey/${id}`);
     setSurvey(res.data);
   };
@@ -51,7 +50,7 @@ const SurveyView = () => {
 
     await api.post("/api/result", result);
     alert("설문조사에 응해주셔서 감사합니다!");
-    navigate("/surveylist");
+    navigate("/surveylist?page_number=1");
   };
   return (
     <div className="surveyview">

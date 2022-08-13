@@ -4,8 +4,11 @@ import "./surveyresult.scss";
 import api from "../../utils/api";
 import { Menu } from "antd";
 import { BarChartOutlined, DesktopOutlined, SettingOutlined } from "@ant-design/icons";
+import { useNavigate, useParams } from "react-router-dom";
 
-const SurveyResult = (props) => {
+const SurveyResult = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [result, setResult] = useState({
     title: "",
     answers: [
@@ -20,14 +23,13 @@ const SurveyResult = (props) => {
     ],
   });
   const getResult = async () => {
-    const res = await api.get(`/api/result/${props.match.params.id}`);
+    const res = await api.get(`/api/result/${id}`);
     setResult(res.data);
   };
 
   useEffect(() => {
     getResult();
-    props.setMenu("mysurvey");
-  }, [props]);
+  }, []);
 
   return (
     <div className="surveyresult">
@@ -39,7 +41,7 @@ const SurveyResult = (props) => {
               icon={<DesktopOutlined />}
               className="menu-item"
               onClick={() => {
-                props.history.push(`/mysurvey/${props.match.params.id}`);
+                navigate(`/mysurvey/${id}`);
               }}
             >
               등록된 화면
@@ -49,7 +51,7 @@ const SurveyResult = (props) => {
               icon={<SettingOutlined />}
               className="menu-item"
               onClick={() => {
-                props.history.push(`/mysurvey/edit/${props.match.params.id}`);
+                navigate(`/mysurvey/edit/${id}`);
               }}
             >
               수정하기

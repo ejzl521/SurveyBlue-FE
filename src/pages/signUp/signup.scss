@@ -1,23 +1,32 @@
 .signup-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 3rem 0;
-  .input-form {
-    width: 25rem;
+  .signup-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 5rem;
+    background: #ffffff;
+    border-radius: 10px;
+    .input-form {
+      width: 30rem;
 
-    .error-message {
-      color: blue;
+      .error-message {
+        color: blue;
+        font-size: 1rem;
+      }
     }
-  }
 
-  .ant-form-item-label > label {
-    color: #ffffff;
-    font-weight: bold;
-  }
+    .ant-form-item-label > label {
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
 
-  .ant-checkbox-wrapper {
-    color: #ffffff;
+    .ant-checkbox-wrapper {
+    }
   }
 }

@@ -16,7 +16,7 @@ const SignIn = () => {
   init("user_grlvG2L9uYW2IN1PMYs3m");
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("올바른 이메일 형식이 아닙니다!").required("이메일을 입력하세요!"),
@@ -27,6 +27,7 @@ const SignIn = () => {
     try {
       const { data } = await api.post("/api/auth/signin", { email, password });
       dispatch(setToken(data.jwt));
+      alert("로그인에 성공했습니다!");
       const redirectUrl = searchParams.get("redirectUrl");
       // 원래 페이지로 돌아가는 부분
       if (redirectUrl) {
@@ -103,30 +104,32 @@ const SignIn = () => {
       {({ values, handleSubmit, handleChange, errors }) => (
         <div className="signin-wrapper">
           <ToastContainer />
-          <Form layout="vertical" autoComplete="off" onFinish={handleSubmit}>
-            <Form.Item className="input-form" label="이메일">
-              <Input value={values.email} name="email" onChange={handleChange} />
-              <div className="error-message">
-                <div className="error-message">{errors.email}</div>
-              </div>
-            </Form.Item>
-            <Form.Item className="input-form" label="비밀번호">
-              <Input.Password value={values.password} name="password" onChange={handleChange} />
-              <div className="error-message">
-                <div className="error-message">{errors.password}</div>
-              </div>
-            </Form.Item>
-            <Form.Item>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <a href={void 0} onClick={showModal}>
-                  Forget Password?
-                </a>
-                <Button type="primary" htmlType="submit">
-                  Login
-                </Button>
-              </div>
-            </Form.Item>
-          </Form>
+          <div className="signin-body">
+            <Form layout="vertical" autoComplete="off" onFinish={handleSubmit}>
+              <Form.Item className="input-form" label="이메일">
+                <Input value={values.email} name="email" onChange={handleChange} size="large" />
+                <div className="error-message">
+                  <div className="error-message">{errors.email}</div>
+                </div>
+              </Form.Item>
+              <Form.Item className="input-form" label="비밀번호">
+                <Input.Password value={values.password} name="password" onChange={handleChange} size="large" />
+                <div className="error-message">
+                  <div className="error-message">{errors.password}</div>
+                </div>
+              </Form.Item>
+              <Form.Item>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <a href={void 0} onClick={showModal}>
+                    Forget Password?
+                  </a>
+                  <Button type="primary" htmlType="submit">
+                    Login
+                  </Button>
+                </div>
+              </Form.Item>
+            </Form>
+          </div>
           <ToastContainer />
           <Modal title="비밀번호 찾기" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
             <p>회원가입시 등록한 이메일 주소를 적어주세요.</p>

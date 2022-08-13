@@ -41,9 +41,12 @@ const SurveyList = () => {
         {surveyList.surveys.map((item, idx) =>
           // 이미 참여한 설문조사는 Badge를 보여주고 이미 참여했다는 alert 창을 보여준다!
           user_response.find((i) => i === item.id) ? (
-            <Badge.Ribbon text={<div style={{ color: "#254275", fontSize: "0.9em" }}>이미 참여함</div>} color="#ffd966">
+            <Badge.Ribbon
+              key={idx}
+              text={<div style={{ color: "#254275", fontSize: "0.9em" }}>이미 참여함</div>}
+              color="#ffd966"
+            >
               <Card
-                key={idx}
                 className="survey-card"
                 hoverable
                 cover={<img className="survey-image" alt="example" src={img} />}
@@ -76,7 +79,7 @@ const SurveyList = () => {
               navigate(`/surveylist?page_number=${page_number}`);
             }}
             defaultCurrent={surveyList.page_number}
-            pageSize={surveyList.page_size}
+            pageSize={8}
             total={surveyList.total}
           />
         </div>

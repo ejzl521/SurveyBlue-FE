@@ -50,7 +50,7 @@ const MySurvey = () => {
               navigate(`/mysurvey?page_number=${page_number}`);
             }}
             defaultCurrent={surveyList.page_number}
-            pageSize={surveyList.page_size}
+            pageSize={8}
             total={surveyList.total}
           />
         </div>

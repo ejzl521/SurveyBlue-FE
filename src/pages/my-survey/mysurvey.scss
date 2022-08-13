@@ -1,13 +1,9 @@
 .mysurvey-wrapper{
-  width: 80vw;
-  min-height: 81.8vh;
-  padding: 25px;
-  margin: 20px auto;
-  border-radius: 10px;
   background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  width: 80%;
+  padding: 3rem;
+  margin: 1.5rem auto;
+  border-radius: 10px;
   .surveylist{
     display: inline-flex;
     justify-content: center;

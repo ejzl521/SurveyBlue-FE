@@ -9,8 +9,10 @@ import * as Yup from "yup";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { setToken } from "../../redux/reducers/AuthReducer";
+import { useNavigate } from "react-router-dom";
 
-const MyInfo = (props) => {
+const MyInfo = () => {
+  const navigate = useNavigate();
   const token = useSelector((state) => state.Auth.token);
   const dispatch = useDispatch();
   const validationSchema = Yup.object().shape({
@@ -36,7 +38,7 @@ const MyInfo = (props) => {
         },
       );
       window.setTimeout(() => {
-        props.history.push("/signin");
+        navigate("/signin");
         dispatch(setToken(""));
         window.location.reload();
       }, 2000);
@@ -46,18 +48,10 @@ const MyInfo = (props) => {
       });
     }
   };
-  useEffect(() => {
-    props.setMenu("myinfo");
-  }, [props]);
   return (
     <div className="myinfo-wrapper">
       <ToastContainer />
       <div className="myinfo-content">
-        <Menu className="myinfo-menu" defaultSelectedKeys={["1"]} mode="inline" theme="dark">
-          <Menu.Item key="1" icon={<SettingOutlined />}>
-            비밀번호 변경하기
-          </Menu.Item>
-        </Menu>
         <div className="change-password">
           <Formik
             initialValues={{

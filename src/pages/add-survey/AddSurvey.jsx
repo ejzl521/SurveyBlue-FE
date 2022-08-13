@@ -10,7 +10,7 @@ import { jwtUtils } from "../../utils/JwtUtils";
 import ImageUploader from "../../components/ImageUploader";
 import { useNavigate } from "react-router-dom";
 
-const AddSurvey = (props) => {
+const AddSurvey = () => {
   const token = useSelector((state) => state.Auth.token);
   const navigate = useNavigate();
   const initialValues = {
@@ -91,7 +91,7 @@ const AddSurvey = (props) => {
     }
 
     alert("설문조사 등록이 완료되었습니다!");
-    props.history.push("/surveylist");
+    navigate("/surveylist?page_number=1");
   };
   useEffect(() => {}, []);
 
@@ -174,7 +174,7 @@ const AddSurvey = (props) => {
                 }
                 // 객관식(사진)
                 else if (item.type === "img_objective") {
-                  const img_choices = item.images.map((image, idx) => (
+                  const img_choices = item.images?.map((image, idx) => (
                     <div key={idx}>
                       <div className="img-obj-choice">
                         <ImageUploader
@@ -310,12 +310,9 @@ const AddSurvey = (props) => {
                     htmlType="submit"
                     size="large"
                     onClick={() => {
-                      validationSchema
-                        .validate(values)
-                        .then((data) => {})
-                        .catch((err) => {
-                          alert(err);
-                        });
+                      validationSchema.validate(values).catch(() => {
+                        alert("모든 항목을 올바르게 등록해주세요!");
+                      });
                     }}
                   >
                     제출하기
