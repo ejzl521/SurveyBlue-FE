@@ -78,15 +78,47 @@ https://user-images.githubusercontent.com/55455103/184561074-99e14bd2-24d9-48b2-
 ### ➂ 설문조사 참여 → 중복 설문 참여 방지
 - 설문조사 목록 페이지에서 설문조사에 참여할 수 있다.
 - 로그인한 사용자만 설문조사에 참여할 수 있고 이미 참여한 설문조사는 다시 참여할 수 없다.
+  <details>
+    <summary><h4>설문조사 참여</h4></summary>
+    <div markdown="1">
+    <img src="https://user-images.githubusercontent.com/55455103/188353729-de77d564-4996-49ad-b281-2f30970f695b.gif"/>
+    </div>
+  </details>
 ### ➃ 설문조사 수정/삭제
 - 설문조사 수정의 경우 사용자가 이전에 작성한 게시물의 상태를 그대로 불러와서 보여줌
 - 내가 등록한 설문조사 페이지에서 내가 작성한 게시물을 확인하고 수정/삭제할 수 있다.
-
+  <details>
+    <summary><h4>설문조사 수정</h4></summary>
+    <div markdown="1">
+    <img src="https://user-images.githubusercontent.com/55455103/188354068-ebe61b1c-7aba-4c3d-9f6b-b37829968b76.gif"/>
+    </div>
+  </details>
 ### ⑤ 설문조사 통계 보기
 - 내가 등록한 설문조사의 통계를 확인할 수 있으며 만약 설문조사를 수정할 경우 설문조사의 통계가 초기화된다!
-
+  <details>
+    <summary><h4>설문조사 수정</h4></summary>
+    <div markdown="1">
+    <img src="https://user-images.githubusercontent.com/55455103/188354269-f47a828c-ed63-4230-9732-927fe1e5c3d3.gif"/>
+    </div>
+  </details>
 ### ⑥ 비밀번호 찾기 및 변경
 - emailJS를 이용하여 비밀번호 분실 시 이메일로 새로운 임시 비밀번호를 발급받을 수 있다.
+  <details>
+    <summary><h4>설문조사 수정</h4></summary>
+    <div markdown="1">
+    <img src="https://user-images.githubusercontent.com/55455103/188354287-b2ae44a7-9300-42ef-801c-a71d3cfd33f1.gif"/>
+    </div>
+  </details>
+# Utility
+### jwtUtils 클래스 구현
+- jwt를 파싱해서 유효한 jwt인지 검증하거나 payload에 있는 사용자의 이름, DB에 저장되어 있는 ID등을 사용하는 로직이 여러 컴포넌트에서 중복되기 때문에 유틸리티 클래스 구현
+### axios interceptor
+- axios interceptor를 구현하여 HTTP 요청 시 redux의 store에 토큰이 있으면 넣어서 서버의 미들웨어(typeORM 인증 미들웨어)가 이를 검증하게 함
+### PrivateRoutes - UX도 고려
+- props로 가고자하는 URL과 보여줄 컴포넌트를 넘겨준다.
+- 전역 상태(redux-persist)에 저장되어 있는 토큰을 검증하여 인증되지 않은 사용자가 인증된 사용자만 접근할 수 있는 페이지에 접근할 때, 원래 접근하려고 한 URL을 query parameter로 넘겨서 로그인 페이지로 들어가게 한 후, 로그인 페이지에서 로그인 완료시 query parameter로 받은 Redirect URL로 돌아게가 한다. UX적 관점에서 생각을 많이 했다.
+- 만약 전역 상태에 저장되어 있는 토큰을 검증해서 유효한 jwt를 가지고 있는 사용자라면 원래 가고자한 페이지로 넘어가게 해준다.
+- 관리자일 경우 관리자가 사용할 수 있는 메뉴를 보여주고 사용자일 경우에는 사용자만 사용할 수 있는 메뉴를 보여준다
 
 # 돌아보며 📝
 - HTTP, 세션/쿠키, JWT TOKEN등 기본적인 웹 개발 지식에 대해 더 공부해야 할 것 같다📝
