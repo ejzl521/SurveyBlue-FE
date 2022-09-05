@@ -63,7 +63,6 @@
     <img src="https://user-images.githubusercontent.com/55455103/188350768-52d74033-566f-426f-ba7e-134a13f27658.gif"/>
     </div>
   </details>
-https://user-images.githubusercontent.com/55455103/184561074-99e14bd2-24d9-48b2-aded-bc0d194dac90.gif
 ### ➁ 설문조사 등록 → dynamic form
 - jwt의 payload에 관리자임을 알려주는 정보가 있을 경우만 private route를 통과하여 기능을 사용할 수 있음!
 - 관리자로 로그인한 사용자만 이용을 할 수 있는 기능
@@ -127,6 +126,8 @@ https://user-images.githubusercontent.com/55455103/184561074-99e14bd2-24d9-48b2-
 - useEffect 훅으로 서버의 데이터를 가져올 때 렌더링 최적화를 할 필요가 있는 것 같다
 - 다음에 프로젝트를 진행할 때는 recoil을 사용해서 전역 상태 관리를 하고 react-query를 사용해서 서버 상태 관리를 해봐야겠다!
 - 다음에 인증기능을 구현할 때는 refresh token과 access token을 사용해서 좀 더 보안에 신경써서 프로젝트를 진행할 예정이다
+
+
 # 아래 링크에 기능 및 설명에 대해 하드코딩 해두었다😎
 - http://surveyblue.site/explain
 
