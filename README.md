@@ -1,6 +1,7 @@
 # React로 설문조사 플랫폼 만들기😎
 - 기존에 만들었던 Restful API + React 기반 게시판 사이트 개발을 해보고 기능을 추가해서 프로젝트를 진행해보고 싶었다!
-- dynamic form을 구현해 설문조사 폼을 만드는 UX를 개발!
+- 혼자서 백엔드와 프론트엔드 개발을 진행하고 배포까지 해보기!
+- 제일 신경을 많이 쓴 부분은 dynamic form을 구현해 설문조사 폼을 만드는 UX를 개발한 것!
 - http://surveyblue.site/
 #### 메인화면
   ![image](https://user-images.githubusercontent.com/55455103/184560430-4cc91e9a-74dd-453f-a138-fe4c09dcf239.png)
@@ -40,7 +41,7 @@
 - css 프레임워크
 - 페이지네이션 컴포넌트와 같이 커스텀하기 까다로운 부분을 쉽게 가져다 사용
 ### scss
-- 계층적 CSS 작업을 통해 가독성 및 보일러플레이트 감소
+- 계층적 CSS 작업을 통해 가독성 증가 및 보일러플레이트 감소
 ### react-router-dom v6
 - 라우팅, 동적 라우팅, query parmeter와 uri parameter를 효율적으로 파싱
 ### jwt-decode
@@ -49,15 +50,43 @@
 - 비밀번호 분실 시 이메일로 새 비밀번호 발급
 
 
-# 주요 기능
-- 회원가입
-- 로그인, 로그아웃
-- 설문조사 전체 보기
-- 설문조사 등록, 삭제, 수정 (로그인한 관리자만 가능)
-- 설문조사 참여 (중복 설문 참여 방지)
-- 설문조사 통계 보기
-- 비밀번호 찾기 및 변경
-- 사용자 역할 구분(관리자/사용자)
+# 구현한 주요 기능
+### ➀ 로그인/회원가입 → 사용자의 역할 구분
+- yup을 이용한 validation 검증을 통해 사용자에게 적절한 정보를 입력하도록 유도
+- 회원가입 시 관리자와 사용자를 구분하여 회원 가입
+- 관리자는 설문조사 등록 및 참여를 할 수 있고 사용자는 참여만 가능
+- 로그인 성공시 redux-persist를 이용해 local storage에 jwt 저장 ➔ 새로고침해도 로그인 상태 유지
+- 로그아웃시 redux-persist에 있는 jwt 정보 삭제
+  <details>
+    <summary><h4>회원가입 form</h4></summary>
+    <div markdown="1">
+    <img src="https://user-images.githubusercontent.com/55455103/188350768-52d74033-566f-426f-ba7e-134a13f27658.gif"/>
+    </div>
+  </details>
+https://user-images.githubusercontent.com/55455103/184561074-99e14bd2-24d9-48b2-aded-bc0d194dac90.gif
+### ➁ 설문조사 등록 → dynamic form
+- jwt의 payload에 관리자임을 알려주는 정보가 있을 경우만 private route를 통과하여 기능을 사용할 수 있음!
+- 관리자로 로그인한 사용자만 이용을 할 수 있는 기능
+- formick과 yup을 이용해 dynamic form을 구현해서 설문조사 form을 구현함.
+- 문제는 객관식/주관식/객관식(사진)으로 나뉘어져 있고 deep copy와 formick의 메서드 setValues를 이용해서 사용자가 UX와 상호작용 하면서 문항의 갯수를 늘리거나 문항의 유형을 변경할 수 있다.
+  <details>
+    <summary><h4>설문조사 등록 dynamic form</h4></summary>
+    <div markdown="1">
+    <img src="https://user-images.githubusercontent.com/55455103/184561074-99e14bd2-24d9-48b2-aded-bc0d194dac90.gif"/>
+    </div>
+  </details>
+### ➂ 설문조사 참여 → 중복 설문 참여 방지
+- 설문조사 목록 페이지에서 설문조사에 참여할 수 있다.
+- 로그인한 사용자만 설문조사에 참여할 수 있고 이미 참여한 설문조사는 다시 참여할 수 없다.
+### ➃ 설문조사 수정/삭제
+- 설문조사 수정의 경우 사용자가 이전에 작성한 게시물의 상태를 그대로 불러와서 보여줌
+- 내가 등록한 설문조사 페이지에서 내가 작성한 게시물을 확인하고 수정/삭제할 수 있다.
+
+### ⑤ 설문조사 통계 보기
+- 내가 등록한 설문조사의 통계를 확인할 수 있으며 만약 설문조사를 수정할 경우 설문조사의 통계가 초기화된다!
+
+### ⑥ 비밀번호 찾기 및 변경
+- emailJS를 이용하여 비밀번호 분실 시 이메일로 새로운 임시 비밀번호를 발급받을 수 있다.
 
 # 돌아보며 📝
 - HTTP, 세션/쿠키, JWT TOKEN등 기본적인 웹 개발 지식에 대해 더 공부해야 할 것 같다📝
@@ -65,7 +94,7 @@
 - 리액트 관련 공부를 더 많이 해야할 것 같다.. 코딩 컨벤션과 라이브러리 사용이 많이 부족하다!
 - useEffect 훅으로 서버의 데이터를 가져올 때 렌더링 최적화를 할 필요가 있는 것 같다
 - 다음에 프로젝트를 진행할 때는 recoil을 사용해서 전역 상태 관리를 하고 react-query를 사용해서 서버 상태 관리를 해봐야겠다!
-- 다음에 인증기능을 구현할 때는 refresh token과 access token을 사용해서 csrf 공격과 xss 공격에 대응하는 방법을 익힐것이다!
+- 다음에 인증기능을 구현할 때는 refresh token과 access token을 사용해서 좀 더 보안에 신경써서 프로젝트를 진행할 예정이다
 # 아래 링크에 기능 및 설명에 대해 하드코딩 해두었다😎
 - http://surveyblue.site/explain
 
