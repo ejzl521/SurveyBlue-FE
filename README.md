@@ -96,7 +96,7 @@ https://user-images.githubusercontent.com/55455103/184561074-99e14bd2-24d9-48b2-
 ### ⑤ 설문조사 통계 보기
 - 내가 등록한 설문조사의 통계를 확인할 수 있으며 만약 설문조사를 수정할 경우 설문조사의 통계가 초기화된다!
   <details>
-    <summary><h4>설문조사 수정</h4></summary>
+    <summary><h4>설문조사 통계 보기</h4></summary>
     <div markdown="1">
     <img src="https://user-images.githubusercontent.com/55455103/188354269-f47a828c-ed63-4230-9732-927fe1e5c3d3.gif"/>
     </div>
@@ -104,7 +104,7 @@ https://user-images.githubusercontent.com/55455103/184561074-99e14bd2-24d9-48b2-
 ### ⑥ 비밀번호 찾기 및 변경
 - emailJS를 이용하여 비밀번호 분실 시 이메일로 새로운 임시 비밀번호를 발급받을 수 있다.
   <details>
-    <summary><h4>설문조사 수정</h4></summary>
+    <summary><h4>비밀번호 찾기</h4></summary>
     <div markdown="1">
     <img src="https://user-images.githubusercontent.com/55455103/188354287-b2ae44a7-9300-42ef-801c-a71d3cfd33f1.gif"/>
     </div>
